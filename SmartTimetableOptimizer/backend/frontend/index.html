@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Timetable Optimizer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Smart Timetable Optimizer</h1>
+    <p>Automated Timetable Generation System</p>
+  </header>
+
+  <nav>
+    <button type="button" onclick="showSection('dashboard')">Dashboard</button>
+    <button type="button" onclick="showSection('groups')">Groups</button>
+    <button type="button" onclick="showSection('teachers')">Teachers</button>
+    <button type="button" onclick="showSection('subjects')">Subjects</button>
+    <button type="button" onclick="showSection('rooms')">Rooms</button>
+    <button type="button" onclick="showSection('settings')">Settings</button>
+    <button type="button" onclick="showSection('generate')">Generate</button>
+    <button type="button" onclick="showSection('results')">Results</button>
+    <button type="button" onclick="showSection('calendar')">Calendar</button>
+  </nav>
+
+  <main>
+    <section id="dashboard" class="section dashboard-section">
+      <div class="dashboard-hero">
+        <div class="hero-content">
+          <span class="hero-badge">SMART ACADEMIC SCHEDULING</span>
+          <h2>Welcome to Smart Timetable Optimizer</h2>
+          <p>
+            Generate conflict-free, optimized college timetables while managing
+            groups, teachers, subjects, rooms and academic calendar dates.
+          </p>
+          <div class="hero-actions">
+            <button type="button" class="hero-primary" onclick="showSection('generate')">
+              Generate Timetable
+            </button>
+            <button type="button" class="hero-secondary" onclick="showSection('calendar')">
+              Open Calendar
+            </button>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-calendar-icon">▦</div>
+          <div class="hero-floating-card">
+            <strong id="scheduleSummary"></strong>
+            <span>Weekly Schedule</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-heading">
+        <div>
+          <h2>System Overview</h2>
+          <p>Current data available for timetable generation</p>
+        </div>
+        <span class="dashboard-status"><span></span> System Ready</span>
+      </div>
+
+      <div class="dashboard-cards">
+        <div class="card dashboard-card groups-card">
+          <div class="card-top">
+            <div class="card-icon">G</div>
+            <span class="card-label">STUDENT DATA</span>
+          </div>
+          <h3>Groups</h3>
+          <p id="studentCount">0</p>
+          <div class="card-footer"><span>Student groups</span><span>→</span></div>
+        </div>
+
+        <div class="card dashboard-card teachers-card">
+          <div class="card-top">
+            <div class="card-icon">T</div>
+            <span class="card-label">FACULTY DATA</span>
+          </div>
+          <h3>Teachers</h3>
+          <p id="teacherCount">0</p>
+          <div class="card-footer"><span>Teaching staff</span><span>→</span></div>
+        </div>
+
+        <div class="card dashboard-card subjects-card">
+          <div class="card-top">
+            <div class="card-icon">S</div>
+            <span class="card-label">ACADEMIC DATA</span>
+          </div>
+          <h3>Subjects</h3>
+          <p id="subjectCount">0</p>
+          <div class="card-footer"><span>Subjects configured</span><span>→</span></div>
+        </div>
+
+        <div class="card dashboard-card rooms-card">
+          <div class="card-top">
+            <div class="card-icon">R</div>
+            <span class="card-label">RESOURCE DATA</span>
+          </div>
+          <h3>Rooms</h3>
+          <p id="roomCount">0</p>
+          <div class="card-footer"><span>Available rooms</span><span>→</span></div>
+        </div>
+      </div>
+
+      <div class="quick-access">
+        <div>
+          <h3>Quick Access</h3>
+          <p>Manage your timetable system from one place.</p>
+        </div>
+        <div class="quick-buttons">
+          <button type="button" onclick="showSection('groups')">Manage Groups</button>
+          <button type="button" onclick="showSection('teachers')">Manage Teachers</button>
+          <button type="button" onclick="showSection('subjects')">Manage Subjects</button>
+          <button type="button" onclick="showSection('rooms')">Manage Rooms</button>
+          <button type="button" onclick="showSection('results')">View Results</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="groups" class="section hidden">
+      <h2>Student Groups</h2>
+      <input type="text" id="groupName" placeholder="Group Name">
+      <input type="number" id="groupCount" placeholder="Number of Students">
+      <button type="button" onclick="addGroup()">Add Group</button>
+      <div id="groupList"></div>
+    </section>
+
+    <section id="teachers" class="section hidden">
+      <h2>Teachers</h2>
+      <input type="text" id="teacherName" placeholder="Teacher Name">
+      <input type="text" id="teacherSubject" placeholder="Subject">
+      <input type="text" id="teacherAvailability" placeholder="Availability">
+      <button type="button" onclick="addTeacher()">Add Teacher</button>
+      <div id="teacherList"></div>
+    </section>
+
+    <section id="subjects" class="section hidden">
+      <h2>Subjects</h2>
+      <input type="text" id="subjectName" placeholder="Subject Name">
+      <input type="text" id="subjectTeacher" placeholder="Teacher">
+      <input type="number" id="subjectPeriods" placeholder="Periods">
+      <input type="text" id="subjectGroup" placeholder="Group">
+      <input type="text" id="subjectRoomType" placeholder="Room Type">
+      <button type="button" onclick="addSubject()">Add Subject</button>
+      <div id="subjectList"></div>
+    </section>
+
+    <section id="rooms" class="section hidden">
+      <h2>Rooms</h2>
+      <input type="text" id="roomName" placeholder="Room Name">
+      <input type="number" id="roomCapacity" placeholder="Capacity">
+      <input type="text" id="roomType" placeholder="Room Type">
+      <button type="button" onclick="addRoom()">Add Room</button>
+      <div id="roomList"></div>
+    </section>
+
+    <section id="settings" class="section hidden">
+      <h2>Timetable Settings</h2>
+      <label for="workingDays">Working Days</label>
+      <input type="number" id="workingDays" value="5" min="1" max="7">
+      <label for="periodsPerDay">Periods Per Day</label>
+      <input type="number" id="periodsPerDay" value="6" min="1" max="12">
+    </section>
+
+    <section id="generate" class="section hidden">
+      <h2>Generate Timetable</h2>
+      <p>Enter the required groups, teachers, subjects and rooms. Then generate the timetable using the selected
+        settings.</p>
+      <button type="button" onclick="generateTimetable()">Generate Timetable</button>
+      <p id="searchProcess"></p>
+    </section>
+
+    <section id="results" class="section hidden">
+      <h2>Generated Timetable</h2>
+      <div id="timetableOutput"></div>
+      <div class="results-actions">
+        <button type="button" onclick="exportCSV()">Export CSV</button>
+        <button type="button" onclick="printTimetable()">Print Timetable</button>
+      </div>
+      <h2>Optimization Summary</h2>
+      <div id="optimizationSummary"></div>
+      <div id="scoreBreakdown"></div>
+      <h2>Teacher Workload</h2>
+      <div id="teacherWorkload"></div>
+      <h2>Room Utilization</h2>
+      <div id="roomUtilization"></div>
+    </section>
+
+    <!-- NEW: Academic Calendar -->
+    <section id="calendar" class="section hidden">
+      <div class="calendar-title-row">
+        <div>
+          <h2>Academic Calendar</h2>
+          <p class="calendar-subtitle">
+            View date-wise working days, holidays and the timetable for the selected date.
+          </p>
+        </div>
+        <div class="calendar-year-box">
+          <label for="calendarYear">Year</label>
+          <input type="number" id="calendarYear" min="2020" max="2100">
+        </div>
+      </div>
+
+      <div class="calendar-controls">
+        <button type="button" onclick="previousCalendarMonth()">← Previous</button>
+        <h3 id="calendarMonthTitle"></h3>
+        <button type="button" onclick="nextCalendarMonth()">Next →</button>
+      </div>
+
+      <div class="calendar-legend">
+        <span><span class="calendar-legend-dot working-dot"></span> Working Day</span>
+        <span><span class="calendar-legend-dot holiday-dot"></span> Holiday</span>
+        <span><span class="calendar-legend-dot today-dot"></span> Today</span>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid"></div>
+
+      <div id="selectedDatePanel" class="selected-date-panel">
+        <div class="result-box">
+          <h3>Select a date</h3>
+          <p>Click a date in the calendar to view its status and timetable.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
